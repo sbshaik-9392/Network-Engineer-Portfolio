@@ -1,0 +1,26 @@
+
+! Lab 01 - Router-on-a-Stick
+! Verified from Router#show running-config
+
+hostname Router
+
+interface FastEthernet0/0
+ no ip address
+ speed auto
+ full-duplex
+
+interface FastEthernet0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+
+interface FastEthernet0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+
+end
