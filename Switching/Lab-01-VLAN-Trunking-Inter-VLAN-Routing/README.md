@@ -89,3 +89,22 @@ This lab demonstrates VLAN segmentation, 802.1Q trunking, and inter-VLAN communi
 - Network emulator: EVE-NG
 - Devices: Cisco router, Cisco Layer 2 switch, VPCS
 - Documentation: GitHub
+
+## Configuration Files
+
+- [Router Configuration](configs/router-config.txt)
+- [Switch Configuration](configs/switch-config.txt)
+
+## Verification Results
+
+- [VLAN, Trunk, IP Addressing and Ping Verification](verification/README.md)
+
+## Troubleshooting
+
+- [Trunk Configuration Issue and Resolution](troubleshooting/README.md)
+
+## Lab Status
+
+**Status:** Completed and verified in EVE-NG.
+
+**Key Result:** Successful bidirectional ping connectivity between VLAN 10 and VLAN 20 using Router-on-a-Stick inter-VLAN routing.
