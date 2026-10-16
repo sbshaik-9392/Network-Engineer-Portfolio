@@ -21,7 +21,7 @@ The lab was built and tested in EVE-NG using a Cisco router, a Cisco Layer 2 swi
 
 **Devices:** 1 Cisco router, 1 Cisco Layer 2 switch, and 2 VPCS nodes.
 
-The topology screenshot will be added to this lab directory.
+The following diagram shows the EVE-NG topology used to configure VLAN 10, VLAN 20, 802.1Q trunking, and Router-on-a-Stick inter-VLAN routing.
 
 ![Lab 01 Topology](topology.png)
 
