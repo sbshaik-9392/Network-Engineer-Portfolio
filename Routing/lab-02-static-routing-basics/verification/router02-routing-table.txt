@@ -1,0 +1,18 @@
+Router02 - Routing Table Verification
+
+Command:
+show ip route
+
+Output:
+
+C    10.0.0.0/30 is directly connected, FastEthernet0/1
+S    192.168.1.0/24 [1/0] via 10.0.0.1
+C    192.168.2.0/24 is directly connected, FastEthernet0/0
+
+Static Route:
+ip route 192.168.1.0 255.255.255.0 10.0.0.1
+
+Verification:
+- Local LAN 192.168.2.0/24 is directly connected.
+- Inter-router network 10.0.0.0/30 is directly connected.
+- Remote LAN 192.168.1.0/24 is reachable through next hop 10.0.0.1.
