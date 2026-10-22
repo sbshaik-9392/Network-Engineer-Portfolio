@@ -1,0 +1,63 @@
+# Lab 02 - Router01 Configuration
+
+## Device Information
+
+- Topology label: Router01
+- Actual hostname in running configuration: Static
+- IOS version: 12.4
+
+## Running Configuration
+
+```text
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+hostname Static
+no aaa new-model
+memory-size iomem 5
+ip cef
+!
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ ip address 10.0.0.1 255.255.255.252
+ duplex auto
+ speed auto
+!
+ip route 192.168.2.0 255.255.255.0 10.0.0.2
+```
+
+## Interface Addressing
+
+| Interface | IP Address | Purpose |
+|---|---|---|
+| FastEthernet0/0 | 192.168.1.1/24 | Node3 LAN gateway |
+| FastEthernet0/1 | 10.0.0.1/30 | Link to Router02 |
+
+## Static Route
+
+The following route forwards traffic for the remote LAN through Router02:
+
+```text
+ip route 192.168.2.0 255.255.255.0 10.0.0.2
+```
+
+- Destination network: `192.168.2.0/24`
+- Next-hop address: `10.0.0.2`
+- Administrative distance: 1 (default for a standard static route)
+
+## Routing Table Verification
+
+The supplied `show ip route` output confirms these entries:
+
+```text
+C 10.0.0.0/30 is directly connected, FastEthernet0/1
+C 192.168.1.0/24 is directly connected, FastEthernet0/0
+S 192.168.2.0/24 [1/0] via 10.0.0.2
+```
+
+**Result:** Router01 has directly connected routes for its local LAN and inter-router network, plus a static route to the remote LAN.
