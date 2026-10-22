@@ -63,28 +63,16 @@ For communication from Node3 to Node4:
 - [Router01 Configuration](configs/router01-config.txt)
 - [Router02 Configuration](configs/router02-config.txt)
 
-## Verification Results
+## Verification Evidence
 
-The following results were reported from the completed EVE-NG lab:
-
-- Both routers' interfaces were up/up.
-- Static routes were configured on both routers.
-- Node3 successfully pinged Router02's LAN interface (`192.168.2.1`).
-- Node3 successfully pinged Node4 (`192.168.2.10`).
-- Node4 successfully pinged Node3 (`192.168.1.10`).
-
-Detailed routing-table outputs and verification evidence will be documented in the `verification/` directory.
+- [Routing and Connectivity Verification](verification/README.md)
+- [Router01 Routing Table](verification/router01-routing-table.txt)
+- [Router02 Routing Table](verification/router02-routing-table.txt)
 
 ## Troubleshooting
 
-Actual issues, root causes, corrective actions, and verification results will be documented in the `troubleshooting/` directory.
+- [Static Routing Troubleshooting Guide](troubleshooting/README.md)
 
-## Lab Status
+## Lab Outcome
 
-**Status:** Connectivity verification completed in EVE-NG.
-
-**Key Result:** End-to-end communication between the two LANs was successful using static routing.
-
----
-
-*This lab is part of my Network Engineer Portfolio and demonstrates practical IPv4 routing and troubleshooting skills.*
+Successfully configured static routes between two routers and verified the reported end-to-end connectivity between the two LANs using ICMP ping tests.
