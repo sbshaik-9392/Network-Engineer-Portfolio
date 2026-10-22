@@ -1,0 +1,16 @@
+Router02 (hostname: S-Routing)
+Platform: Cisco IOS 12.4
+
+! Interface configuration
+interface FastEthernet0/0
+ ip address 192.168.2.1 255.255.255.0
+ duplex auto
+ speed auto
+
+interface FastEthernet0/1
+ ip address 10.0.0.2 255.255.255.252
+ duplex auto
+ speed auto
+
+! Static route to Router01 LAN
+ip route 192.168.1.0 255.255.255.0 10.0.0.1
