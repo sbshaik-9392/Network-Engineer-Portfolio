@@ -50,7 +50,8 @@ Each router advertises its local LAN and directly connected transit networks thr
 - [OSPF Neighbor Verification](verification/ospf-neighbors.txt)
 - [OSPF Routing Table Verification](verification/ospf-routing-tables.txt)
 - [End-to-End Connectivity Tests](verification/connectivity-tests.txt)
-
+- [OSPF Failure Analysis and Route Recovery](verification/ospf-failure-analysis.txt)
+  
 ## Verification Results
 - OSPF neighbors reached the FULL state.
 - All three routers learned the expected remote networks through OSPF.
