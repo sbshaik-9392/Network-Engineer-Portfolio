@@ -33,11 +33,11 @@ This lab demonstrates OSPF dynamic routing between three Cisco routers using a s
 
 ## OSPF Configuration Summary
 
-| Router   | OSPF Process ID | Router ID | Area |
-
-| Router01 |       1         |  1.1.1.1  |   0  |
-| Router02 |       2         |  2.2.2.2  |   0  |
-| Router03 |       3         |  3.3.3.3  |   0  |
+| Router | OSPF Process ID | Router ID | Area |
+|---|---:|---|---:|
+| Router01 | 1 | 1.1.1.1 | 0 |
+| Router02 | 2 | 2.2.2.2 | 0 |
+| Router03 | 3 | 3.3.3.3 | 0 |
 
 Each router advertises its local LAN and directly connected transit networks through OSPF. Process IDs are locally significant and do not need to match between routers.
 
