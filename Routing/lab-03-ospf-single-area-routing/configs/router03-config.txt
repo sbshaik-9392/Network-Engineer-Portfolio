@@ -1,0 +1,29 @@
+Router03 - OSPF Configuration
+
+Hostname: OSPF-03
+OSPF Process ID: 3
+OSPF Router ID: 3.3.3.3
+OSPF Area: 0
+
+Interface Configuration
+
+interface FastEthernet0/0
+ ip address 192.168.3.1 255.255.255.0
+
+interface FastEthernet0/1
+ ip address 10.0.23.2 255.255.255.252
+
+OSPF Configuration
+
+router ospf 3
+ router-id 3.3.3.3
+ log-adjacency-changes
+ network 10.0.23.0 0.0.0.3 area 0
+ network 192.168.3.0 0.0.0.255 area 0
+
+Verification Commands
+
+show ip interface brief
+show ip ospf neighbor
+show ip route
+show ip route ospf
