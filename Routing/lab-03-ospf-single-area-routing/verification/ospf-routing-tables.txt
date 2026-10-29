@@ -1,0 +1,49 @@
+# OSPF Routing Table Verification
+
+## Objective
+Verify that all three routers have learned remote networks through OSPF Area 0.
+
+## Router 1 — OSPF-R1
+
+Command: `show ip route ospf`
+
+```text
+     10.0.0.0/30 is subnetted, 2 subnets
+O       10.0.23.0 [110/11] via 10.0.12.2, FastEthernet0/1
+O    192.168.2.0/24 [110/20] via 10.0.12.2, FastEthernet0/1
+O    192.168.3.0/24 [110/21] via 10.0.12.2, FastEthernet0/1
+```
+
+**Result:** R1 learned the R2–R3 transit network and both remote LANs through OSPF.
+
+## Router 2 — OSPF-02
+
+Command: `show ip route ospf`
+
+```text
+O    192.168.1.0/24 [110/20] via 10.0.12.1, FastEthernet0/1
+O    192.168.3.0/24 [110/11] via 10.0.23.2, FastEthernet1/0
+```
+
+**Result:** R2 learned the LANs behind R1 and R3 through OSPF.
+
+## Router 3 — OSPF-03
+
+Command: `show ip route ospf`
+
+```text
+     10.0.0.0/30 is subnetted, 2 subnets
+O       10.0.12.0 [110/20] via 10.0.23.1, FastEthernet0/1
+O    192.168.1.0/24 [110/30] via 10.0.23.1, FastEthernet0/1
+O    192.168.2.0/24 [110/20] via 10.0.23.1, FastEthernet0/1
+```
+
+**Result:** R3 learned the R1–R2 transit network and both remote LANs through OSPF.
+
+## Key Observations
+
+- OSPF routes are identified by the `O` route code.
+- The administrative distance is `110`.
+- The routers learned remote networks dynamically without manually configuring static routes.
+- OSPF path metrics differ according to the calculated path cost.
+- The routing tables confirm that OSPF route propagation is working across all three routers.
