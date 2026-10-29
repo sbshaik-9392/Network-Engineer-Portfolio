@@ -56,6 +56,54 @@ Each router advertises its local LAN and directly connected transit networks thr
 - All three routers learned the expected remote networks through OSPF.
 - Six directed ping tests between the three VPCS LANs received successful replies.
 
+## OSPF Troubleshooting and Failure Analysis
+
+This section extends the single-area OSPF lab with controlled failure testing, route withdrawal, and recovery verification using the same EVE-NG topology.
+
+### Scenario 1: Transit Interface Failure
+
+**Action:** Shut down Router01 FastEthernet0/1.
+
+**Observed result:**
+- The OSPF neighbor relationship between Router01 and Router02 was lost.
+- Remote OSPF routes became unavailable.
+- Connectivity to networks beyond the failed transit link was interrupted.
+
+**Observed recovery result:**
+- The OSPF adjacency was re-established after the interface was restored.
+- Remote OSPF routes were learned again.
+- End-to-end connectivity was restored.
+
+### Scenario 2: Missing LAN Network Advertisement
+
+**Action:** Remove the OSPF network statement for `192.168.3.0/24` from Router03.
+
+**Observed result:**
+- Router01's OSPF neighbor relationship with Router02 remained FULL.
+- The route to `192.168.3.0/24` disappeared from Router01's routing table.
+
+**Recovery:** Restore the network statement on Router03. Router01 relearned `192.168.3.0/24` through next hop `10.0.12.2`, originating from Router ID `3.3.3.3`, with OSPF metric `21`.
+
+### Scenario 3: End-to-End Connectivity Recovery
+
+After restoring the OSPF advertisement, VPCS01 successfully pinged `192.168.3.10`. The received replies showed TTL `61`.
+
+### Troubleshooting Commands
+
+```text
+show ip ospf neighbor
+show ip route ospf
+show ip route 192.168.3.0
+show running-config | section ospf
+```
+### Key Findings
+
+- OSPF adjacency and route advertisement are separate concepts.
+- A transit interface failure can remove the neighbor adjacency and associated remote routes.
+- A missing network advertisement can withdraw a specific route while an existing neighbor adjacency remains FULL.
+- Restoring the interface or advertisement allows routing and connectivity to recover.
+- The linear topology has no alternate path for failover.
+
 ## Key Learning Points
 - Configuring OSPF dynamic routing in a single area.
 - Understanding OSPF router IDs and locally significant process IDs.
