@@ -1,0 +1,33 @@
+Router02 - OSPF Configuration
+
+Hostname: OSPF-02
+OSPF Process ID: 2
+OSPF Router ID: 2.2.2.2
+OSPF Area: 0
+
+Interface Configuration
+
+interface FastEthernet0/0
+ ip address 192.168.2.1 255.255.255.0
+
+interface FastEthernet0/1
+ ip address 10.0.12.2 255.255.255.252
+
+interface FastEthernet1/0
+ ip address 10.0.23.1 255.255.255.252
+
+OSPF Configuration
+
+router ospf 2
+ router-id 2.2.2.2
+ log-adjacency-changes
+ network 10.0.12.0 0.0.0.3 area 0
+ network 10.0.23.0 0.0.0.3 area 0
+ network 192.168.2.0 0.0.0.255 area 0
+
+Verification Commands
+
+show ip interface brief
+show ip ospf neighbor
+show ip route
+show ip route ospf
