@@ -1,0 +1,114 @@
+# OSPF Failure Analysis and Route Withdrawal
+
+## Scenario 1: Transit Interface Shutdown
+
+### Baseline — Before Failure
+
+**Command:** `show ip ospf neighbor`
+
+```text
+OSPF-R1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DR         00:00:38    10.0.12.2       FastEthernet0/1
+```
+
+**Command:** `show ip route ospf`
+
+```text
+     10.0.0.0/30 is subnetted, 2 subnets
+O       10.0.23.0 [110/11] via 10.0.12.2, FastEthernet0/1
+O    192.168.2.0/24 [110/20] via 10.0.12.2, FastEthernet0/1
+O    192.168.3.0/24 [110/21] via 10.0.12.2, FastEthernet0/1
+```
+
+**Observation:** Router01 had an OSPF neighbor with Router02 in the FULL state and had learned the remote transit network and LAN routes.
+
+### Failure Injection
+
+Router01 FastEthernet0/1 was administratively shut down.
+
+```text
+OSPF-R1#configure terminal
+OSPF-R1(config)#interface FastEthernet0/1
+OSPF-R1(config-if)#shutdown
+OSPF-R1(config-if)#end
+```
+
+### Verification During Failure
+
+```text
+OSPF-R1#show ip ospf neighbor
+
+OSPF-R1#show ip route ospf
+```
+
+Both commands returned no neighbor entries or OSPF route entries in the captured output.
+
+**Observation:** The OSPF neighbor and learned OSPF routes were no longer present while the transit interface was shut down.
+
+### Recovery Action
+
+```text
+OSPF-R1#configure terminal
+OSPF-R1(config)#interface FastEthernet0/1
+OSPF-R1(config-if)#no shutdown
+OSPF-R1(config-if)#end
+```
+
+**Recovery verification:** Post-recovery command output was not included in this capture.
+
+---
+
+## Scenario 2: Missing OSPF LAN Advertisement
+
+### Baseline — Before Removing the Network Statement
+
+**Command:** `show ip route 192.168.3.0`
+
+```text
+OSPF-R1#show ip route 192.168.3.0
+Routing entry for 192.168.3.0/24
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Last update from 10.0.12.2 on FastEthernet0/1, 00:03:16 ago
+  Routing Descriptor Blocks:
+  * 10.0.12.2, from 3.3.3.3, 00:03:16 ago, via FastEthernet0/1
+      Route metric is 21, traffic share count is 1
+```
+
+**Observation:** Router01 learned `192.168.3.0/24` through OSPF, with next hop `10.0.12.2`, originating router ID `3.3.3.3`, and metric `21`.
+
+### Change Applied on Router03
+
+The OSPF network statement for the Router03 LAN was removed.
+
+```text
+OSPF-03#configure terminal
+OSPF-03(config)#router ospf 3
+OSPF-03(config-router)#no network 192.168.3.0 0.0.0.255 area 0
+OSPF-03(config-router)#end
+```
+
+### Verification After Removing the Advertisement
+
+```text
+OSPF-R1#show ip route 192.168.3.0
+% Network not in table
+```
+
+**Observation:** The specific route to `192.168.3.0/24` disappeared from Router01's routing table.
+
+### Recovery
+
+The original network statement was restored on Router03. Router01 subsequently relearned the route with metric `21`, through next hop `10.0.12.2`, originating from router ID `3.3.3.3`, as reported during the lab.
+
+**Recovery evidence:** The restored configuration and recovery command output were not included in this capture.
+
+---
+
+## Key Findings
+
+- A transit interface failure can remove the OSPF adjacency and remote OSPF routes.
+- Removing a LAN network advertisement can withdraw that LAN's route without necessarily removing an existing neighbor adjacency.
+- The two scenarios demonstrate different OSPF failure behaviors: adjacency loss versus route withdrawal.
+- Recovery actions were performed, but complete post-recovery CLI evidence should be captured separately.
