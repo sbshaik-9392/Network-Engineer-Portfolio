@@ -1,0 +1,53 @@
+# OSPF End-to-End Connectivity Verification
+
+## Objective
+Verify end-to-end connectivity between all three LANs using OSPF single-area routing.
+
+## IP Addressing
+
+| Device | IP Address | Default Gateway |
+|---|---|---|
+| VPCS01 | 192.168.1.10/24 | 192.168.1.1 |
+| VPCS02 | 192.168.2.10/24 | 192.168.2.1 |
+| VPCS03 | 192.168.3.10/24 | 192.168.3.1 |
+
+## Ping Test Results
+
+### VPCS01 — Source: 192.168.1.10
+
+**Test 1:** `ping 192.168.2.10`
+
+Result: Successful. Replies received from VPCS02.
+
+**Test 2:** `ping 192.168.3.10`
+
+Result: Successful. Replies received from VPCS03.
+
+### VPCS02 — Source: 192.168.2.10
+
+**Test 3:** `ping 192.168.1.10`
+
+Result: Successful. Replies received from VPCS01.
+
+**Test 4:** `ping 192.168.3.10`
+
+Result: Successful. Replies received from VPCS03.
+
+### VPCS03 — Source: 192.168.3.10
+
+**Test 5:** `ping 192.168.1.10`
+
+Result: Successful. Replies received from VPCS01.
+
+**Test 6:** `ping 192.168.2.10`
+
+Result: Successful. Replies received from VPCS02.
+
+## Summary
+
+- All six directed ping tests shown in the screenshots succeeded.
+- All three LANs can communicate with one another.
+- OSPF-learned routes provide connectivity between remote networks.
+- The observed ping replies confirm end-to-end IP connectivity across the three-router topology.
+
+**Overall Status: PASS**
