@@ -1,0 +1,38 @@
+# OSPF Neighbor Verification
+
+## Router01 — OSPF-R1
+
+Command: `show ip ospf neighbor`
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DR         00:00:36    10.0.12.2       FastEthernet0/1
+```
+
+## Router02 — OSPF-02
+
+Command: `show ip ospf neighbor`
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+3.3.3.3           1   FULL/DR         00:00:34    10.0.23.2       FastEthernet1/0
+1.1.1.1           1   FULL/BDR        00:00:37    10.0.12.1       FastEthernet0/1
+```
+
+## Router03 — OSPF-03
+
+Command: `show ip ospf neighbor`
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/BDR        00:00:32    10.0.23.1       FastEthernet0/1
+```
+
+## Observations
+
+- Router01 has one OSPF neighbor: Router02 (`2.2.2.2`).
+- Router02 has two OSPF neighbors: Router01 (`1.1.1.1`) and Router03 (`3.3.3.3`).
+- Router03 has one OSPF neighbor: Router02 (`2.2.2.2`).
+- All reported neighbor states are FULL.
+- The observed neighbor relationships match the three-router chain topology.
+
+## Result
+
+OSPF neighbor adjacency has been established between the directly connected routers in Area 0, as shown by the supplied command outputs.
